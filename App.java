@@ -2,7 +2,7 @@
  * Name: Rodney Dugger Sr
  * Date: 10/27/23
  * Assignment: CIS319 Week 4 GP - Database Interactions
- * 
+ *
  * Main application class.
 */
 import java.sql.Connection;
