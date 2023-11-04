@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class SQLiteDatabase {
     public static Connection connect(String database) {
-        String url = "jbdc:sqlite:" + database;
+        String url = "jdbc:sqlite:" + database;
         Connection conn = null;
 
         try {

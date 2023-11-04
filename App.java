@@ -1,7 +1,7 @@
 /********************************************************************
  * Name: Rodney Dugger Sr
- * Date: 10/27/23
- * Assignment: CIS319 Week 4 GP - Database Interactions
+ * Date: 11/04/23
+ * Assignment: CIS319 Week 5 - Course Project
  *
  * Main application class.
 */
@@ -11,40 +11,56 @@ import java.util.ArrayList;
 public class App {
     public static void main(String[] args) throws Exception {
         final String dbName = "Dugger.db";
-        System.out.println("\nRodney Dugger Sr, Week 4 Database Interactions GP\n");
+        System.out.println("\nRodney Dugger Sr, Week 5 Course Project\n");
         Connection conn = SQLiteDatabase.connect(dbName);
 
         if (conn != null) {
-            if (PersonDb.createTable(conn)) {
+            if (BoatShippingCoDb.createTable(conn)) {
                 //Create
-                PersonDb.addPerson(conn, new Person("Rodney", "Dugger", 16));
-                PersonDb.addPerson(conn, new Person("John", "Smith", 45));
-                PersonDb.addPerson(conn, new Person("Jane", "Jones", 24));
-                PersonDb.addPerson(conn, new Person("Joe", "Diffy", 61));
+                BoatShippingCoDb.addBoatShippingCo(conn, new BoatShippingCo("rm456", "ReadyMix", "80bl Bag"));
+                BoatShippingCoDb.addBoatShippingCo(conn, new BoatShippingCo("pr321", "Prestressed", "Hardened"));
+                BoatShippingCoDb.addBoatShippingCo(conn, new BoatShippingCo("pv907", "Pervious", "30% porous"));
+                BoatShippingCoDb.addBoatShippingCo(conn, new BoatShippingCo("qs456", "QuickSet", "Hardens in 45 minutes")); 
 
                 //Update
-                Person personToUpdate = new Person(2, "James", "Smith", 37);
-                PersonDb.updatePerson(conn, personToUpdate);
-                Person updatedPerson = PersonDb.getPerson(conn, personToUpdate.ID);
-                System.out.println("\nUpdate Person");
-                printPerson(updatedPerson);
-
+                BoatShippingCo boatShippingCoToUpdate = new BoatShippingCo(2,"pr500", "ReadyMix", "80bl Bag");
+                BoatShippingCoDb.updateBoatShippingCo(conn, boatShippingCoToUpdate);
+                BoatShippingCo updatedBoatShippingCo = BoatShippingCoDb.getBoatShippingCo(conn, boatShippingCoToUpdate.ID);
+                System.out.println("\nUpdate BoatShippingCo");
+                printBoatShippingCo(updatedBoatShippingCo);
+                
                 //Delete
-                PersonDb.deletePerson(conn, personToUpdate.ID);
-                System.out.println("\nAllPeople in the Database");
-                printPeople(PersonDb.getAllPeople(conn));
+                BoatShippingCoDb.deleteBoatShippingCo(conn, boatShippingCoToUpdate.ID);
+                 BoatShippingCoDb.deleteBoatShippingCo(conn, 1);
+                
+                System.out.println("\nAll BoatShippingCos in the Database");
+                printBoatShippingCos(BoatShippingCoDb.getAllBoatShippingCos(conn));
+
+                System.out.println("\nBoatShippingCos in the Database by ID");
+                printBoatShippingCo(BoatShippingCoDb.getBoatShippingCo(conn, 3));
+                printBoatShippingCo(BoatShippingCoDb.getBoatShippingCo(conn, 4));
+
+                System.out.println("\nAll BoatShippingCos using an invalid ID");
+                printBoatShippingCo(BoatShippingCoDb.getBoatShippingCo(conn, -4));
+                printBoatShippingCo(BoatShippingCoDb.getBoatShippingCo(conn, -9));
+            
             }
         }
     }
-    private static void printPeople(ArrayList<Person> people) {
-        for (Person p : people) {
-            printPerson(p);
+    private static void printBoatShippingCos(ArrayList<BoatShippingCo> boatShippingCos) {
+        for (BoatShippingCo b : boatShippingCos) {
+            printBoatShippingCo(b); 
         }
     }
+    
 
-    private static void printPerson(Person p) {
-        System.out.print("Person " + p.ID + ": ");
-        System.out.print(p.FirstName + " " + p.LastName + " is "
-            + p.Age + " years old\n");
-    }
+    private static void printBoatShippingCo(BoatShippingCo b) {
+        System.out.println("\nBoatShippingCo " + b.ID + ": ");
+        System.out.println("    " + b.ProdID);
+        System.out.println("    " + b.ProdName);
+        System.out.println("    " + b.ProdDescription);
+       /*  System.out.println("    " + b.ShipFromAddress);
+        System.out.println("    " + b.LayOverAddress);
+        System.out.println("    " + b.ShipToAddress); */
+    } 
 }
